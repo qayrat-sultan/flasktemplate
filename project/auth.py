@@ -120,6 +120,6 @@ def change_password():
     return render_template('change_password.html', message=message)
 
 
-@auth.route('/login')
+@auth.route('/unauthorize')
 def unauthorized():
-    return render_template('login.html', message="Please authorize this site for use functions")
+    return render_template('unauthorize.html', message="Please authorize this site for use functions")

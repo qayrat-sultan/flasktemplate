@@ -1,5 +1,7 @@
 import os
-from flask import Flask
+from http import HTTPStatus
+
+from flask import Flask, session, request, abort, redirect, url_for
 from flask_login import LoginManager
 from pymongo import MongoClient
 from dotenv import load_dotenv
@@ -29,9 +31,20 @@ def create_app():
     login_manager.init_app(app)
     login_manager.login_view = 'auth.unauthorized'
 
+    @login_manager.unauthorized_handler
+    def unauthorized():
+        if request.blueprint == 'api':
+            abort(HTTPStatus.UNAUTHORIZED)
+        return redirect(url_for('auth.unauthorized'))
+
     @login_manager.user_loader
-    def load_user(user_email):
-        return collusers.find_one({'email': user_email})
+    def load_user():
+        user_email = None
+        if 'email' in session:
+            user_email = session['email']
+        x = collusers.find_one({'email': user_email})
+        print("@@@@@@@@@@@@@@@@@@@@", x)
+        return x
 
     # blueprint for auth routes in our app
     from .auth import auth as auth_blueprint

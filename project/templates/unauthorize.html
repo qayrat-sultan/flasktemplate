@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Youv'e logged in {% endblock %}
+
+{% block content %}
+{% if message  %}
+    <div class="alert alert-secondary" role="alert">
+        <p>{{ message }}</p>
+    </div>
+{% endif %}
+<a href="{{ url_for('auth.login') }}">Login account</a><br>
+<a href="{{ url_for('auth.signup')}}">New account</a>
+{% endblock %}
