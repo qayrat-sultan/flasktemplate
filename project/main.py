@@ -5,7 +5,6 @@ main = Blueprint('main', __name__)
 
 
 @main.route("/")
-@login_required
 def index():
     return redirect(url_for("auth.login"))
 

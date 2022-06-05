@@ -54,4 +54,7 @@ def create_app():
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
+    from .courses import courses as courses_blueprint
+    app.register_blueprint(courses_blueprint)
+
     return app
